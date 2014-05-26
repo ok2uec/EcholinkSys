@@ -1,0 +1,24 @@
+{
+    "name": "ok2uec/echolinksys",
+    "description": "The verification EchoLink numbers, whether they are online / offline and write to the DB.",
+    "keywords": ["echolink", "ham", "ok2uec"],
+    "homepage": "https://github.com/ok2uec/Echolink-CRON-System",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Nakládal",
+            "email": "nakladal@intravps.cz",
+            "homepage": "http://smoce.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+	"centralapps/pdo": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "EcholinkSys": "."
+        }
+    }
+}
