@@ -23,6 +23,13 @@ use PDO;
 class System {
 
     /**
+     * Response CODE
+     */
+    CONST RESPONSE_OK = "response_ok";
+    CONST RESPONSE_SERVER_DISCONNECT = "server_disconnect";
+    CONST RESPONSE_SERVER_PROBLEM = "server_problem";
+
+    /**
      * Domain from which the data will be downloaded
      */
     CONST domainVerification = "http://echolink.org/logins.jsp";
@@ -47,6 +54,12 @@ class System {
      * @var PDO $mysql
      */
     private $mysql = null;
+
+    /**
+     * Response message for check fce
+     * @var String $responseStat
+     */
+    public $responseStat = null;
 
     /**
      * MYSQL parram
@@ -218,6 +231,18 @@ class System {
 
         $context = stream_context_create($options);
         $echolinkRemoteData = @file_get_contents(self::domainVerification, false, $context);
+        if (!empty($http_response_header)) {
+            sscanf($http_response_header[0], 'HTTP/%*d.%*d %d', $code);
+        }
+        
+        if ($code != 200) {
+            if ($code == 503) {
+                $this->responseStat = self::RESPONSE_SERVER_DISCONNECT;
+            } else {
+                $this->responseStat = self::RESPONSE_SERVER_PROBLEM;
+            }
+            return false;
+        }
 
         $date = new DateTime();
         $dateResult = $date->format('Y-m-d H:i:s');
@@ -249,6 +274,7 @@ class System {
                 }
             }
             $this->addHistoryLog($status);
+//            $this->responseStat = self::RESPONSE_OK;
         } else {
             die("Houston, server is unavailable!");
             //EchoLink server is unavailable
