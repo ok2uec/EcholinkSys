@@ -27,8 +27,7 @@ class System {
      */
     CONST RESPONSE_OK = "response_ok";
     CONST RESPONSE_SERVER_DISCONNECT = "server_disconnect";
-    CONST RESPONSE_SERVER_PROBLEM = "server_problem";
-
+    CONST RESPONSE_SERVER_PROBLEM = "server_problem"; 
     /**
      * Domain from which the data will be downloaded
      */
@@ -59,7 +58,7 @@ class System {
      * Response message for check fce
      * @var String $responseStat
      */
-    public $responseStat = null;
+    public $responseStat = self::RESPONSE_OK;
 
     /**
      * MYSQL parram
